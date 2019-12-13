@@ -19325,7 +19325,7 @@ function getRandomInt(max) {
 class Piece {
 
   constructor( piece ) {
-    console.log( piece );
+    // console.log( piece );
     this.pieceType = piece;
     if ( piece === 1 ) {
       this.sq1 = [ 0, 4 ];
@@ -19365,20 +19365,9 @@ class Piece {
     } else {
       console.error( 'idk what piece this is.');
     }
-    // gameBoard.boardArray[ this.sq1[ 0 ] ] [this.sq1[ 1 ] ] = this.pieceType;
-    // gameBoard.boardArray[ this.sq2[ 0 ] ] [this.sq2[ 1 ] ] = this.pieceType;
-    // gameBoard.boardArray[ this.sq3[ 0 ] ] [this.sq3[ 1 ] ] = this.pieceType;
-    // gameBoard.boardArray[ this.sq4[ 0 ] ] [this.sq4[ 1 ] ] = this.pieceType;
 
   }
 
-  // erase() {
-  //   gameBaord.boardArray[ this.sq1[ 0 ] ] [this.sq1[ 1 ] ] = 0;
-  //   gameBoard.boardArray[ this.sq2[ 0 ] ] [this.sq2[ 1 ] ] = 0;
-  //   gameBoard.boardArray[ this.sq3[ 0 ] ] [this.sq3[ 1 ] ] = 0;
-  //   gameBoard.boardArray[ this.sq4[ 0 ] ] [this.sq4[ 1 ] ] = 0;
-
-  // }
 
   fall() {
     this.sq1[ 0 ] +=1;
@@ -19386,11 +19375,6 @@ class Piece {
     this.sq3[ 0 ] +=1;
     this.sq4[ 0 ] +=1;
     
-    // gameBoard.boardArray[ this.sq1[ 0 ] ] [this.sq1[ 1 ] ] = this.pieceType;
-    // gameBoard.boardArray[ this.sq2[ 0 ] ] [this.sq2[ 1 ] ] = this.pieceType;
-    // gameBoard.boardArray[ this.sq3[ 0 ] ] [this.sq3[ 1 ] ] = this.pieceType;
-    // gameBoard.boardArray[ this.sq4[ 0 ] ] [this.sq4[ 1 ] ] = this.pieceType;
-
     update();
   }
 
@@ -19413,6 +19397,7 @@ class PieceBag {
 
 class Board {
   constructor( rows ) {
+    this.colHeights = [ 21, 21, 21, 21, 21, 21, 21, 21, 21, 21 ];
     this.boardArray = new Array();
     for ( let i = 0; i < rows; i++ ) {
       this.boardArray[ i ] = new Array( 10 );
@@ -19429,8 +19414,6 @@ class Board {
     update();
   }
 
-
-
   fallPiece() {
     this.boardArray[ this.myPiece.sq1[ 0 ] ] [this.myPiece.sq1[ 1 ] ] = 0;
     this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] ] = 0;
@@ -19446,7 +19429,28 @@ class Board {
 
   }
 
+  checkPiece() {
+    let placed = false;
+    // if the y of a piece sq is equal to the col height ( organized in order of x ) than the piece is ready to be placed
+    if ( this.myPiece.sq1[ 0 ] === this.colHeights[ this.myPiece.sq1[ 1 ] ] || 
+         this.myPiece.sq2[ 0 ] === this.colHeights[ this.myPiece.sq2[ 1 ] ] || 
+         this.myPiece.sq3[ 0 ] === this.colHeights[ this.myPiece.sq3[ 1 ] ] || 
+         this.myPiece.sq4[ 0 ] === this.colHeights[ this.myPiece.sq4[ 1 ] ] ) {
+           placed = true;
+         }
+    return placed;
+  }
 
+  updateColHeights() {
+    for( let i = 0; i < 10; i++ ) {
+      for ( let j = 0; j < 22; j++ ) {
+        if( this.boardArray[ j ][ i ] !== 0 ) {
+          this.colHeights[ i ] = j -1;
+          break;
+        }
+      }
+    }
+  }
 }
 
 gameBoard = new Board( 22 );
@@ -19454,18 +19458,31 @@ gameBoard = new Board( 22 );
 currentPieceBag = new PieceBag();
 
 
-gameBoard.spawnPiece( currentPieceBag.pieceBag[ 0 ] );
+let pieceToSpawn = 0;
+
+gameBoard.spawnPiece( currentPieceBag.pieceBag[ pieceToSpawn ] );
+
 
 setInterval( function() {
-  gameBoard.fallPiece();
-}, 500 );
-
-
-
+  // check to see if piece has been placed or is still falling
+  if ( !gameBoard.checkPiece() ){
+    gameBoard.fallPiece();
+  } else {
+    // has been placed
+    console.log( gameBoard.colHeights );
+    gameBoard.updateColHeights();
+    pieceToSpawn +=1;
+    gameBoard.spawnPiece( currentPieceBag.pieceBag[ pieceToSpawn ] );
+    if( pieceToSpawn === 6 ) {
+      pieceToSpawn = 0;
+      currentPieceBag = new PieceBag();
+      
+    }
+  }
+}, 250 );
 
 
 // render tetris board
-
 function update() {
   let rows = svg.selectAll( '.row' )
                 .data( function(){
@@ -19516,13 +19533,6 @@ function update() {
                   .attrs( { 'stroke-width' : 0.5, 'width' : rectWidth, 'height' : rectHeight } );
   }
 
-// update();
-
-
-// setInterval( function () {
-  
-//   update();
-// }, 1000 );
 
 
 
