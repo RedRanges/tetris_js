@@ -19303,6 +19303,7 @@ require( 'd3-selection-multi' );
 let svg = d3.select( 'svg' );
 svg.attrs( { 'width' : 160, 'height' : 384 } );
 
+
 const pieces = {
   1 : 'o piece',
   2 : 'l piece',
@@ -19375,11 +19376,33 @@ class Piece {
     this.sq3[ 0 ] +=1;
     this.sq4[ 0 ] +=1;
     
-    update();
+    // update();
   }
 
   rotate() {
+    
+  }
 
+  moveLeft() {
+    if ( this.sq1[ 1 ] > 0 && this.sq2[ 1 ] > 0  && this.sq3[ 1 ] > 0 && this.sq4[ 1 ] > 0 ) {
+      this.sq1[ 1 ] -=1;
+      this.sq2[ 1 ] -=1;
+      this.sq3[ 1 ] -=1;
+      this.sq4[ 1 ] -=1;
+
+      // update();
+    }
+  }
+
+  moveRight() {
+    if ( this.sq1[ 1 ] < 9 && this.sq2[ 1 ] < 9  && this.sq3[ 1 ] < 9 && this.sq4[ 1 ] < 9 ) {
+      this.sq1[ 1 ] +=1;
+      this.sq2[ 1 ] +=1;
+      this.sq3[ 1 ] +=1;
+      this.sq4[ 1 ] +=1;
+
+      // update();
+    }
   }
 }
 
@@ -19411,7 +19434,7 @@ class Board {
     this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] ] = this.myPiece.pieceType;
     this.boardArray[ this.myPiece.sq3[ 0 ] ] [this.myPiece.sq3[ 1 ] ] = this.myPiece.pieceType;
     this.boardArray[ this.myPiece.sq4[ 0 ] ] [this.myPiece.sq4[ 1 ] ] = this.myPiece.pieceType;
-    update();
+    // update();
   }
 
   fallPiece() {
@@ -19425,8 +19448,34 @@ class Board {
     this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] ] = this.myPiece.pieceType;
     this.boardArray[ this.myPiece.sq3[ 0 ] ] [this.myPiece.sq3[ 1 ] ] = this.myPiece.pieceType;
     this.boardArray[ this.myPiece.sq4[ 0 ] ] [this.myPiece.sq4[ 1 ] ] = this.myPiece.pieceType;
-    update();
+    // update();
+  }
 
+  movePiece( keyPress ) {
+    if( keyPress === 'd' ) {
+      this.boardArray[ this.myPiece.sq1[ 0 ] ] [this.myPiece.sq1[ 1 ] ] = 0;
+      this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] ] = 0;
+      this.boardArray[ this.myPiece.sq3[ 0 ] ] [this.myPiece.sq3[ 1 ] ] = 0;
+      this.boardArray[ this.myPiece.sq4[ 0 ] ] [this.myPiece.sq4[ 1 ] ] = 0;
+      this.myPiece.moveRight();
+      this.boardArray[ this.myPiece.sq1[ 0 ] ] [this.myPiece.sq1[ 1 ] ] = this.myPiece.pieceType;
+      this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] ] = this.myPiece.pieceType;
+      this.boardArray[ this.myPiece.sq3[ 0 ] ] [this.myPiece.sq3[ 1 ] ] = this.myPiece.pieceType;
+      this.boardArray[ this.myPiece.sq4[ 0 ] ] [this.myPiece.sq4[ 1 ] ] = this.myPiece.pieceType;
+      update( this.boardArray );
+      
+    } else if ( keyPress === 'a' ) {
+      this.boardArray[ this.myPiece.sq1[ 0 ] ] [this.myPiece.sq1[ 1 ] ] = 0;
+      this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] ] = 0;
+      this.boardArray[ this.myPiece.sq3[ 0 ] ] [this.myPiece.sq3[ 1 ] ] = 0;
+      this.boardArray[ this.myPiece.sq4[ 0 ] ] [this.myPiece.sq4[ 1 ] ] = 0;
+      this.myPiece.moveLeft();
+      this.boardArray[ this.myPiece.sq1[ 0 ] ] [this.myPiece.sq1[ 1 ] ] = this.myPiece.pieceType;
+      this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] ] = this.myPiece.pieceType;
+      this.boardArray[ this.myPiece.sq3[ 0 ] ] [this.myPiece.sq3[ 1 ] ] = this.myPiece.pieceType;
+      this.boardArray[ this.myPiece.sq4[ 0 ] ] [this.myPiece.sq4[ 1 ] ] = this.myPiece.pieceType;
+      update( this.boardArray );
+    }
   }
 
   checkPiece() {
@@ -19467,33 +19516,41 @@ setInterval( function() {
   // check to see if piece has been placed or is still falling
   if ( !gameBoard.checkPiece() ){
     gameBoard.fallPiece();
+    update( gameBoard.boardArray );
   } else {
     // has been placed
     console.log( gameBoard.colHeights );
     gameBoard.updateColHeights();
     pieceToSpawn +=1;
     gameBoard.spawnPiece( currentPieceBag.pieceBag[ pieceToSpawn ] );
+    update( gameBoard.boardArray );
     if( pieceToSpawn === 6 ) {
       pieceToSpawn = 0;
       currentPieceBag = new PieceBag();
       
     }
   }
-}, 250 );
+}, 350 );
+
+document.addEventListener( 'keypress', ( event ) => {
+  gameBoard.movePiece( event.key );
+} );
 
 
 // render tetris board
-function update() {
+function update( data ) {
+
+  svg.selectAll( 'g' ).remove();
+
   let rows = svg.selectAll( '.row' )
-                .data( function(){
-                  // hides spawning rows
-                  // return gameBoard.boardArray.slice( 2 );
-                  return gameBoard.boardArray;
-                } )
-                .enter().append( 'g' )
-                .attr( "transform", function(d, i) {
-                  return "translate(0," + ( rectWidth * i ) + ")";
-                } );
+  .data( function() {
+    return data;
+  } )
+    .enter().append( 'g' )
+    .attr( "transform", function(d, i) {
+      return "translate(0," + ( rectWidth * i ) + ")";
+    } );
+
 
     let cells = rows.selectAll( 'rect' )
                 .data( function ( d, i ) { return d } )
@@ -19529,7 +19586,6 @@ function update() {
                     }
                     return color;
                   } )
-
                   .attrs( { 'stroke-width' : 0.5, 'width' : rectWidth, 'height' : rectHeight } );
   }
 
