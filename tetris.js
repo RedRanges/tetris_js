@@ -17,9 +17,9 @@ document.addEventListener( 'keypress', function ( event ) {
 class Piece {
 
   constructor( piece ) {
-    // console.log( piece );
     this.pieceType = piece;
     this.piecePlaced = false;
+    this.pos = 0;
     if ( piece === 1 ) {
       this.sq1 = [ 0, 4 ];
       this.sq2 = [ 0, 5 ];
@@ -68,6 +68,146 @@ class Piece {
   }
 
   rotate() {
+    if ( this.pieceType === 1 ) {
+      return
+    } else if ( this.pieceType === 2 ) {
+      if ( this.pos === 0 ) {
+        this.sq4[ 1 ] -=1;
+        this.sq4[ 0 ] +=2;
+        this.sq3[ 0 ] +=1;
+        this.sq2[ 1 ] +=1;
+        this.sq1[ 1 ] +=2;
+        this.sq1[ 0 ] -=1;
+        this.pos = 1;
+      } else if ( this.pos === 1 ) {
+        this.sq4[ 1 ] +=1;
+        this.sq4[ 0 ] -=2;
+        this.sq3[ 0 ] -=1;
+        this.sq2[ 1 ] -=1;
+        this.sq1[ 1 ] -=2;
+        this.sq1[ 0 ] +=1;
+        this.pos = 0;
+      }
+    } else if ( this.pieceType === 3 ) {
+
+      if( this.pos === 0 ) {   
+        this.sq4[ 1 ] -=1;
+        this.sq3[ 0 ] -=1;
+        this.sq2[ 0 ] -=2;
+        this.sq2[ 1 ] +=1;
+        this.sq1[ 0 ] -=1;
+        this.sq1[ 1 ] +=2; 
+        this.pos = 1;
+      } else if ( this.pos === 1 ) {
+        this.sq4[ 1 ] +=1;
+        this.sq3[ 1 ] +=1;
+        this.sq2[ 0 ] +=1;
+        this.sq1[ 0 ] +=1;
+        this.sq1[ 1 ] -=2;
+        this.pos = 2;
+      } else if ( this.pos === 2 ) {
+        this.sq4[ 1 ] -=2;
+        this.sq3[ 0 ] +=1;
+        this.sq3[ 1 ] -=1;
+        this.sq1[ 0 ] -=1;
+        this.sq1[ 1 ] +=1;
+        this.pos = 3;
+      } else if ( this.pos === 3 ) {
+        this.sq4[ 1 ] +=2;
+        this.sq2[ 0 ] +=1;
+        this.sq2[ 1 ] -=1;
+        this.sq1[ 0 ] +=1;
+        this.sq1[ 1 ] -=1;
+        this.pos = 0;
+      }
+    } else if ( this.pieceType === 4 ) {
+      if ( this.pos === 0 ) {
+        this.sq4[ 1 ] -=1;
+        this.sq3[ 0 ] -=1;
+        this.sq2[ 1 ] +=1;
+        this.sq2[ 0 ] -=2;
+        this.sq1[ 0 ] +=1;
+        this.pos = 1;
+      } else if ( this.pos === 1 ) {
+        this.sq4[ 1 ] -=1;
+        this.sq3[ 1 ] -=1;
+        this.sq2[ 0 ] +=1;
+        this.sq1[ 0 ] -=1;
+        this.pos = 2;
+      } else if ( this.pos === 2 ) {
+        this.sq4[ 1 ] +=1;
+        this.sq3 [ 1 ] +=1;
+        this.sq2[ 0 ] -=1;
+        this.sq1[ 1 ] -=2;
+        this.sq1[ 0 ] -=1;
+        this.pos = 3;
+      } else if ( this.pos === 3 ) {
+        this.sq4[ 1 ] +=1;
+        this.sq3[ 0 ] +=1;
+        this.sq2[ 1 ] -=1;
+        this.sq2[ 0 ] +=2;
+        this.sq1[ 1 ] +=2;
+        this.sq1[ 0 ] +=1;
+        this.pos = 0;
+      }
+    } else if ( this.pieceType === 5 ) {
+      if ( this.pos === 0 ){
+        this.sq3[ 1 ] +=1;
+        this.sq3[ 0 ] -=1;
+        this.sq2[ 1 ] -=2;
+        this.sq1[ 1 ] -=1;
+        this.sq1[ 0 ] -=1;
+        this.pos = 1;
+      } else if ( this.pos === 1 ) {
+        this.sq3[ 1 ] -=1;
+        this.sq3[ 0 ] +=1;
+        this.sq2[ 1 ] +=2;
+        this.sq1[ 1 ] +=1;
+        this.sq1[ 0 ] +=1;
+        this.pos = 0;
+      }
+    } else if ( this.pieceType === 6 ) {
+      if ( this.pos === 0 ) {
+        this.sq4[ 1 ] -=1;
+        this.sq3[ 0 ] -=1;
+        this.sq2[ 1 ] +=1;
+        this.sq1[ 1 ] +=2;
+        this.sq1[ 0 ] -=1;
+        this.pos = 1;
+      } else if ( this.pos === 1 ) {
+        this.sq4[ 1 ] +=1;
+        this.sq3[ 0 ] +=1;
+        this.sq2[ 1 ] -=1;
+        this.sq1[ 1 ] -=2;
+        this.sq1[ 0 ] +=1;
+        this.pos = 0;
+      }
+    } else if ( this.pieceType === 7 ) {
+     if( this.pos === 0 ) {
+       this.sq4[ 1 ] -=1;
+       this.sq3[ 0 ] -=1;
+       this.sq2[ 1 ] +=1;
+       this.sq2[ 0 ] -=2;
+       this.sq1[ 1 ] +=1;
+       this.pos = 1;
+     } else if ( this.pos === 1 ) {
+       this.sq3 [ 1 ] +=1;
+       this.sq2[ 0 ] +=1;
+       this.sq1[ 1 ] -=2;
+       this.pos = 2;
+     } else if ( this.pos === 2 ) {
+       this.sq3[ 1 ] -=1;
+       this.sq3[ 0 ] -=1;
+       this.pos = 3;
+     } else if ( this.pos === 3 ) {
+       this.sq4[ 1 ] +=1;
+       this.sq3[ 0 ] +=2;
+       this.sq2[ 1 ] -=1;
+       this.sq2[ 0 ] +=1;
+       this.sq1[ 1 ] +=1;
+       this.pos = 0;
+     }
+    }
     
   }
 
@@ -147,12 +287,20 @@ class Board {
         this.addPieceToBoard();
         update( this.boardArray );
       }
+    } else if ( keyPress === 'w' ) {
+      if ( this.checkRotation() ) {
+        this.erasePiece();
+        this.myPiece.rotate();
+        this.addPieceToBoard();
+        update( this.boardArray );
+      }
+
     }
   }
 
   checkFall() {
     // if piece at bottom of board
-    if( this.myPiece.sq3[ 0 ] === 21 ) {
+    if( this.myPiece.sq3[ 0 ] === 21 || this.myPiece.sq4[ 0 ] === 21 ) {
       this.erasePiece();
       this.addPieceToBoard();
       this.myPiece.piecePlaced = true;
@@ -174,7 +322,6 @@ class Board {
 
   checkRight() {
     let rightClear = false;
-    // if ( this.myPiece.sq4[ 0 ] !== 21 ) {
       this.erasePiece();
       if ( this.boardArray[ this.myPiece.sq1[ 0 ] ] [this.myPiece.sq1[ 1 ] + 1 ]  === 0 &&
            this.boardArray[ this.myPiece.sq2[ 0 ] ] [this.myPiece.sq2[ 1 ] + 1 ]  === 0 &&
@@ -183,12 +330,10 @@ class Board {
            ) {
              rightClear = true;
            }
-    // }
     return rightClear;
   }
 
   checkLeft() {
-    // if( this.myPiece.sq4[ 0 ] !== 21 ) {
       let leftClear = false;
       this.erasePiece();
       if ( this.boardArray[ this.myPiece.sq1[ 0 ] ] [this.myPiece.sq1[ 1 ] - 1 ]  === 0 &&
@@ -198,7 +343,147 @@ class Board {
              leftClear = true;
            }
       return leftClear;
-    // }
+    }
+    checkRotation() {
+      let rotationClear = false;
+      this.erasePiece();
+
+      // I piece 
+      if( this.myPiece.pieceType === 2  && this.myPiece.pos === 0 &&
+          this.boardArray[ this.myPiece.sq1[ 0 ] -1 ] [ this.myPiece.sq1[ 1 ] +2 ] === 0 &&
+          this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] +1 ] === 0 &&
+          this.boardArray[ this.myPiece.sq3[ 0 ] +1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+          this.boardArray[ this.myPiece.sq4[ 0 ] +2] [ this.myPiece.sq4[ 1 ] -1 ] === 0 
+           ) { 
+        rotationClear = true;
+      } 
+      else if ( this.myPiece.pieceType === 2 && this.myPiece.pos === 1 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] +1 ] [ this.myPiece.sq1[ 1 ] -2 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] -1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] -1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] -2] [ this.myPiece.sq4[ 1 ] +1 ] === 0 
+        ) {
+          rotationClear = true;
+      }
+
+
+      // J piece
+      if ( this.myPiece.pieceType === 3 && this.myPiece.pos === 0 && 
+           this.boardArray[ this.myPiece.sq1[ 0 ] -1 ] [ this.myPiece.sq1[ 1 ] +2 ] === 0 &&
+           this.boardArray[ this.myPiece.sq2[ 0 ] -2 ] [ this.myPiece.sq2[ 1 ] +1 ] === 0 &&
+           this.boardArray[ this.myPiece.sq3[ 0 ] -1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+           this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] -1 ] === 0 
+           ) {
+             rotationClear = true;
+           }
+      else if ( this.myPiece.pieceType === 3 && this.myPiece.pos === 1 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] +1 ] [ this.myPiece.sq1[ 1 ] -2 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] +1 ] [ this.myPiece.sq2[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] ] [ this.myPiece.sq3[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] +1 ] === 0 
+              ) {
+                rotationClear = true;
+              }
+      else if ( this.myPiece.pieceType === 3 && this.myPiece.pos === 2 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] -1 ] [ this.myPiece.sq1[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] +1 ] [ this.myPiece.sq3[ 1 ] -1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] -2 ] === 0 ) {
+                  rotationClear = true;
+                }
+      else if ( this.myPiece.pieceType === 3 && this.myPiece.pos === 3 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] +1 ] [ this.myPiece.sq1[ 1 ] -1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] +1 ] [ this.myPiece.sq2[ 1 ] -1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ]  ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] +2 ] === 0 ) {
+                  rotationClear = true;
+                }
+      // L piece 
+      else if ( this.myPiece.pieceType === 4  && this.myPiece.pos === 0 && 
+           this.boardArray[ this.myPiece.sq1[ 0 ] +1 ] [ this.myPiece.sq1[ 1 ] ] === 0 &&
+           this.boardArray[ this.myPiece.sq2[ 0 ] -2 ] [ this.myPiece.sq2[ 1 ] +1 ] === 0 &&
+           this.boardArray[ this.myPiece.sq3[ 0 ] -1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+           this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] -1 ] === 0) {
+            rotationClear = true;
+      } else if ( this.myPiece.pieceType === 4 && this.myPiece.pos === 1 && 
+                  this.boardArray[ this.myPiece.sq1[ 0 ] -1 ] [ this.myPiece.sq1[ 1 ] ] === 0 &&
+                  this.boardArray[ this.myPiece.sq2[ 0 ] +1 ] [ this.myPiece.sq2[ 1 ] ] === 0 &&
+                  this.boardArray[ this.myPiece.sq3[ 0 ] ] [ this.myPiece.sq3[ 1 ] -1 ] === 0 &&
+                  this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] -1 ] === 0) {
+                    rotationClear = true;
+                  } 
+      else if ( this.myPiece.pieceType === 4 && this.myPiece.pos === 2 &&
+                this.boardArray[ this.myPiece.sq1[ 0 ] -1 ] [ this.myPiece.sq1[ 1 ] -2 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] -1 ] [ this.myPiece.sq2[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] ] [ this.myPiece.sq3[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] +1 ] === 0 ) {
+                  rotationClear = true;
+                }    
+      else if ( this.myPiece.pieceType === 4 && this.myPiece.pos === 3 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] +1 ] [ this.myPiece.sq1[ 1 ] +2 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] +2 ] [ this.myPiece.sq2[ 1 ] -1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] +1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] +1 ] === 0 ) {
+                  rotationClear = true;
+                }
+      // S piece
+      else if ( this.myPiece.pieceType === 5  && this.myPiece.pos === 0 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] -1 ] [ this.myPiece.sq1[ 1 ] -1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] -2 ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] -1 ] [ this.myPiece.sq3[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] ] === 0 ) {
+                  rotationClear = true;
+              }
+      else if ( this.myPiece.pieceType === 5  && this.myPiece.pos === 1 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] +1 ] [ this.myPiece.sq1[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] +2 ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] +1 ] [ this.myPiece.sq3[ 1 ] -1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] ] === 0 ) {
+                  rotationClear = true;
+        }
+      else if ( this.myPiece.pieceType === 6 && this.myPiece.pos === 0 &&
+                this.boardArray[ this.myPiece.sq1[ 0 ] -1 ] [ this.myPiece.sq1[ 1 ] +2 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] -1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] -1 ] === 0  ) {
+                  rotationClear = true;
+      } 
+      else if ( this.myPiece.pieceType === 6 && this.myPiece.pos === 1 && 
+                  this.boardArray[ this.myPiece.sq1[ 0 ] +1 ] [ this.myPiece.sq1[ 1 ] -2 ] === 0 &&
+                  this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] -1 ] === 0 &&
+                  this.boardArray[ this.myPiece.sq3[ 0 ] +1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+                  this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] +1 ] === 0 ) {
+                    rotationClear = true;
+      } 
+      else if ( this.myPiece.pieceType === 7 && this.myPiece.pos === 0 && 
+                this.boardArray[ this.myPiece.sq1[ 0 ] ] [ this.myPiece.sq1[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq2[ 0 ] -2 ] [ this.myPiece.sq2[ 1 ] +1 ] === 0 &&
+                this.boardArray[ this.myPiece.sq3[ 0 ] -1 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+                this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] -1 ] === 0 ) {
+        rotationClear = true;
+      }
+      else if ( this.myPiece.pieceType === 7 && this.myPiece.pos === 1 && 
+        this.boardArray[ this.myPiece.sq1[ 0 ] ] [ this.myPiece.sq1[ 1 ] -2 ] === 0 &&
+        this.boardArray[ this.myPiece.sq2[ 0 ] +1 ] [ this.myPiece.sq2[ 1 ] ] === 0 &&
+        this.boardArray[ this.myPiece.sq3[ 0 ] ] [ this.myPiece.sq3[ 1 ] +1 ] === 0 &&
+        this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] ] === 0 ) {
+        rotationClear = true;
+      }
+      else if ( this.myPiece.pieceType === 7 && this.myPiece.pos === 2 && 
+        this.boardArray[ this.myPiece.sq1[ 0 ] ] [ this.myPiece.sq1[ 1 ] ] === 0 &&
+        this.boardArray[ this.myPiece.sq2[ 0 ] ] [ this.myPiece.sq2[ 1 ] ] === 0 &&
+        this.boardArray[ this.myPiece.sq3[ 0 ] -1 ] [ this.myPiece.sq3[ 1 ] -1 ] === 0 &&
+        this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] ] === 0 ) {
+        rotationClear = true;
+      }
+      else if ( this.myPiece.pieceType === 7 && this.myPiece.pos === 3 && 
+        this.boardArray[ this.myPiece.sq1[ 0 ] ] [ this.myPiece.sq1[ 1 ] +1 ] === 0 &&
+        this.boardArray[ this.myPiece.sq2[ 0 ] +1 ] [ this.myPiece.sq2[ 1 ] -1 ] === 0 &&
+        this.boardArray[ this.myPiece.sq3[ 0 ] +2 ] [ this.myPiece.sq3[ 1 ] ] === 0 &&
+        this.boardArray[ this.myPiece.sq4[ 0 ] ] [ this.myPiece.sq4[ 1 ] +1 ] === 0 ) {
+        rotationClear = true;
+      }    
+      return rotationClear;
     }
 
     addPieceToBoard() {
@@ -226,7 +511,6 @@ setInterval( function() {
   } else {
     // has been placed
     update( gameBoard.boardArray );
-    console.log( gameBoard.myPiece );
     pieceToSpawn +=1;
     gameBoard.spawnPiece( currentPieceBag.pieceBag[ pieceToSpawn ] );
     update( gameBoard.boardArray );
